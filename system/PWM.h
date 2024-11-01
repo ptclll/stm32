@@ -3,6 +3,7 @@
 
 void PWM_Init(void);
 void PWM_SetCompare1(uint16_t Compare);
-void PWM_Stop(void);
 
+void PWM_Stop(void);
+void PWM_Start(void);
 #endif
