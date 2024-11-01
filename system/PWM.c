@@ -30,6 +30,7 @@ void PWM_Init(void)
 	
 	TIM_OCInitTypeDef TIM_OCInitStructure;
 	TIM_OCStructInit(&TIM_OCInitStructure);
+	
 	TIM_OCInitStructure.TIM_OCMode = TIM_OCMode_PWM1;
 	TIM_OCInitStructure.TIM_OCPolarity = TIM_OCPolarity_High;
 	TIM_OCInitStructure.TIM_OutputState = TIM_OutputState_Enable;
@@ -77,14 +78,10 @@ void TIM2_IRQHandler(void)
     }
 }
 
-
 void PWM_Stop(void)
 {
+	TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
 
-
-    TIM_ITConfig(TIM2, TIM_IT_Update, DISABLE);
-
-    // 配置NVIC
     NVIC_InitTypeDef NVIC_InitStructure;
     NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;  // 使用TIM2中断
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
@@ -92,4 +89,13 @@ void PWM_Stop(void)
     NVIC_InitStructure.NVIC_IRQChannelCmd = DISABLE;
     NVIC_Init(&NVIC_InitStructure);
 }
-
+void PWM_Start(void)
+{
+	TIM_ITConfig(TIM2, TIM_IT_Update, ENABLE);
+	NVIC_InitTypeDef NVIC_InitStructure;
+    NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;  // 使用TIM2中断
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelSubPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+    NVIC_Init(&NVIC_InitStructure);
+}
