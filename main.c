@@ -20,10 +20,10 @@ int main(){
 			
 			num = 0;			
 			 PWM_Stop();
-			PWM_SetCompare1(0);
+			//PWM_SetCompare1(0);
 			Delay_ms(1000);
 			 PWM_Start();
-			PWM_SetCompare1(50);
+			//PWM_SetCompare1(50);
 			void LED1_Turn(void);
 		}
 		//ehuf
